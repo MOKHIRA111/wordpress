@@ -1,0 +1,162 @@
+WORDPRESS SET UP
+AWS Account: Make sure you have an active AWS account.
+Basic AWS Knowledge: Familiarity with basic AWS services like EC2 and IAM.
+Step-by-Step Guide
+1. Launch an EC2 Instance
+Log in to AWS Management Console:
+Go to the AWS Management Console and log in with your credentials.
+Navigate to EC2 Dashboard:
+In the AWS Management Console, find and select "EC2" under the "Services" menu.
+Launch Instance:
+Click on the "Launch Instance" button.
+Choose an Amazon Machine Image (AMI):
+Search for "Bitnami WordPress".
+Select the Bitnami WordPress AMI from the AWS Marketplace.
+Choose Instance Type:
+Select an appropriate instance type (e.g., t2.micro for free tier eligibility).
+Configure Instance:
+Configure your instance settings as needed. You can use the default settings for a basic setup.
+Add Storage:
+Configure storage options as needed. The default settings are usually sufficient for a basic setup.
+Add Tags:
+Add tags to your instance (optional). Tags can help you identify your instances.
+Configure Security Group:
+Create a new security group or select an existing one.
+Add rules to allow HTTP (port 80) and HTTPS (port 443) traffic.
+Ensure SSH (port 22) is allowed to access the instance remotely.
+Review and Launch:
+Review your settings and click "Launch".
+Select or create a new key pair. Download the key pair file (.pem) and keep it safe. You will need this to access your instance.
+           
+
+
+
+
+                LOAD BALANCER 
+AWS Account: Ensure you have an active AWS account.
+EC2 Instances: Ensure you have at least two running EC2 instances to attach to the load balancer.
+Step-by-Step Guide
+ Launch the EC2 Instances (if not already done)
+Log in to AWS Management Console:
+Go to the AWS Management Console and log in with your credentials.
+Navigate to EC2 Dashboard:
+In the AWS Management Console, find and select "EC2" under the "Services" menu.
+Launch Instances:
+Click on the "Launch Instance" button.
+Follow the instructions to launch at least two instances that will be used behind the load balancer.
+2. Create a Load Balancer
+Navigate to the EC2 Dashboard:
+In the AWS Management Console, go to the "EC2 Dashboard".
+Select Load Balancers:
+In the left-hand menu, under "Load Balancing", select "Load Balancers".
+Create Load Balancer:
+Click the "Create Load Balancer" button.
+Choose the type of load balancer you need (e.g., Application Load Balancer, Network Load Balancer, or Classic Load Balancer).
+3. Configure the Load Balancer
+Basic Configuration:
+Provide a name for your load balancer.
+Select the scheme (Internet-facing or Internal).
+Choose the IP address type (IPv4 or dualstack).
+Listeners:
+Configure listeners by selecting the protocol and port for your load balancer to receive traffic (e.g., HTTP on port 80).
+Availability Zones:
+Select the VPC and the availability zones where your load balancer will route traffic. Ensure your EC2 instances are in the selected availability zones.
+Security Groups:
+Choose an existing security group or create a new one. Ensure that the security group allows inbound traffic on the ports your load balancer is configured to use.
+4. Configure the Target Group
+Target Group:
+Create a new target group or select an existing one.
+Provide a name for the target group.
+Select the target type (Instances, IP addresses, or Lambda functions).
+Health Checks:
+Configure health check settings. Specify the protocol and path for health checks (e.g., HTTP and /index.html).
+5. Register Targets
+Add Instances:
+Add the EC2 instances you want to include in the target group.
+Select the instances and click "Include as pending below".
+Review and Create:
+Review all settings and click the "Create" button.
+6. Test the Load Balancer
+DNS Name:
+Once the load balancer is created, go to the load balancer details and copy the DNS name.
+Access the Load Balancer:
+Open a web browser and enter the DNS name of the load balancer. You should be directed to one of your EC2 instances.
+Verify Traffic Distribution:
+Refresh the browser several times to ensure traffic is being distributed across your instances.
+
+
+
+
+
+
+
+
+AUTO SCALING GROUP 
+AWS Account: Ensure you have an active AWS account.
+EC2 Instances: Ensure you have at least one EC2 instance setup or an Amazon Machine Image (AMI) that you can use to launch new instances.
+Step-by-Step Guide
+1. Create a Launch Template or Configuration
+A launch template or configuration specifies the instance configuration information for your Auto Scaling group.
+Create a Launch Template
+Navigate to the EC2 Dashboard:
+Go to the AWS Management Console, and log in with your credentials.
+Under "Services", select "EC2" to go to the EC2 Dashboard.
+Create Launch Template:
+In the left-hand menu, under "Instances", select "Launch Templates".
+Click on "Create launch template".
+Provide a name and description for the template.
+Choose an AMI to use for launching instances.
+Select an instance type.
+Configure any additional instance settings such as key pair, network settings, security groups, storage, etc.
+Click "Create launch template".
+Create a Launch Configuration
+Navigate to Auto Scaling:
+In the EC2 Dashboard, under "Auto Scaling", select "Launch Configurations".
+Create Launch Configuration:
+Click on "Create launch configuration".
+Provide a name for the launch configuration.
+Choose an AMI and instance type.
+Configure any additional instance settings.
+Click "Create launch configuration".
+2. Create an Auto Scaling Group
+Navigate to Auto Scaling Groups:
+In the EC2 Dashboard, under "Auto Scaling", select "Auto Scaling Groups".
+Create Auto Scaling Group:
+Click on "Create Auto Scaling group".
+Provide a name for the Auto Scaling group.
+Select the launch template or launch configuration created in the previous step.
+Click "Next".
+Configure Group Size and Scaling Policies:
+Define the initial size of the group (desired capacity), minimum capacity, and maximum capacity.
+Click "Next".
+Configure Network:
+Select the VPC and subnets where the Auto Scaling group will launch instances.
+Click "Next".
+Configure Advanced Options:
+Configure load balancer options if needed (e.g., attach to an existing load balancer or target group).
+Click "Next".
+Configure Notifications (Optional):
+Set up notifications to receive alerts about scaling events.
+Click "Next".
+Configure Tags (Optional):
+Add tags to help organize and manage your instances.
+Click "Next".
+Review and Create:
+Review your configuration settings and click "Create Auto Scaling group".
+3. Set Up Scaling Policies
+Select Auto Scaling Group:
+In the Auto Scaling groups dashboard, select the Auto Scaling group you just created.
+Configure Scaling Policies:
+Go to the "Scaling policies" tab.
+Click "Add policy".
+Choose the type of policy (e.g., target tracking, step scaling, or simple scaling).
+Define the scaling metrics and thresholds (e.g., CPU utilization, request count).
+Click "Create".
+4. Monitoring and Managing the Auto Scaling Group
+Monitor Instances:
+In the Auto Scaling groups dashboard, you can monitor the status of your instances, see which instances are currently running, and view the health status.
+Modify Group Settings:
+You can update the desired capacity, minimum and maximum size, scaling policies, and other settings as needed.
+View Scaling Activities:
+In the Auto Scaling groups dashboard, select your group and go to the "Activity" tab to view the scaling activities and history.
+
